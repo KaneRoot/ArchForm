@@ -1,6 +1,5 @@
 #!/bin/bash
 
-UID_ROOT=0 # Sert à vérifier que l'utilisateur est bien root
 ERREUR_ROOT=1
 ERREUR_CHOIX=2
 #tab : tableau qui contiendra tous les logiciels à installer
@@ -10,7 +9,7 @@ ERREUR_CHOIX=2
 ## de tab[100 à 199]) logiciels nécessitant une interface graphique (GNOME)
 ## de tab[200 à 299]) logiciels nécessitant une interface graphique (KDE)
 
-	if [ $UID != $UID_ROOT ] ; then
+	if [ -n "$USER" ] ; then
 		echo "Il faut se connecter en root ;) "
 		exit $ERREUR_ROOT
 	fi
