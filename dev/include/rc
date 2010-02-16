@@ -1,0 +1,71 @@
+	rc='/etc/rc.conf'
+
+	echo "#############################################################"
+	echo "################### Édition du fichier rc.conf ##############"
+	echo "#############################################################"
+	
+	read -p "Par défaut LOCALE=\"fr_FR.UTF-8\"  Conserver ? o/n : " rep_locale
+	read -p "Par défaut HARDWARECLOCK=\"\" Conserver ? o/n : " rep_hardwareclock
+	read -p "Par défaut TIMEZONE=\"Europe/Paris\" Conserver ? o/n : " rep_timezone
+	read -p "Par défaut KEYMAP=\"fr-latin9\" Conserver ? o/n : " rep_keymap
+	read -p "Par défaut CONSOLEFONT=\"lat9w-16\" Conserver ? o/n : " rep_consolefont
+	read -p "Par défaut CONSOLEMAP=\"\" Conserver ? o/n : " rep_consolemap
+	read -p "Par défaut USECOLOR=\"yes\" Conserver ? o/n : " rep_usecolor
+	
+	if [ "$rep_locale" = "o" ] ; then
+		rep_locale="fr_FR.UTF-8"
+	else
+		read -p "Entrez la valeur de LOCALE : " rep_locale
+	fi
+	
+	if [ "$rep_hardwareclock" = "o" ] ; then
+		rep_hardwareclock=""
+	else
+		read -p "Entrez la valeur de HARDWARECLOCK : " rep_hardwareclock
+	fi
+	
+	if [ "$rep_timezone" = "o" ] ; then
+		rep_timezone="Europe/Paris"
+	else
+		read -p "Entrez la valeur de timezone : " rep_timezone
+	fi	
+	
+	if [ "$rep_keymap" = "o" ] ; then
+		rep_keymap="fr-latin9"
+	else
+		read -p "Entrez la valeur de KEYMAP : " rep_keymap
+	fi
+
+	if [ "$rep_consolefont" = "o" ] ; then
+		rep_consolefont="lat9w-16"
+	else
+		read -p "Entrez la valeur de CONSOLEFONT : " rep_consolefont
+	fi	
+	
+	if [ "$rep_consolemap" = "o" ] ; then
+		rep_consolemap=""
+	else
+		read -p "Entrez la valeur de CONSOLEMAP : " rep_consolemap
+	fi	
+
+	if [ "$rep_usecolor" = "o" ] ; then
+		rep_usecolor="yes"
+	else
+		rep_usecolor="no"
+	fi
+	
+	cat $rc | head -n 17 > rc.conf.part1
+	cat $rc | tail -n 67 > rc.conf.part2
+	rm $rc
+	echo "LOCALE="$rep_locale"
+HARDWARECLOCK="$rep_hardwareclock"
+TIMEZONE="$rep_timezone"
+KEYMAP="$rep_keymap"
+CONSOLEFONT="$rep_consolefont"
+CONSOLEMAP="$rep_consolemap"
+USECOLOR="$rep_usecolor >> rc.conf.part1
+	cat rc.conf.part2 >> rc.conf.part1
+	rm rc.conf.part2
+	mv rc.conf.part1 $rc
+	chmod 644 $rc
+	

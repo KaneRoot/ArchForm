@@ -1,0 +1,11 @@
+	var_inutile=0
+	while [ "$rep_useradd" = "o" ] || [ -z $var_inutile ]
+	do
+		read -p "Ajout d'un utilisateur o/n : " rep_useradd
+		if [ "$rep_useradd" = "o" ] ; then
+			
+			read -p "nom d'utilisateur (en minuscules) : " rep_username
+			useradd $rep_username
+		fi
+		var_inutile=1
+	done

@@ -1,0 +1,4 @@
+	sshd=`cat /etc/hosts.allow | grep "sshd : 192.168.0.: allow"`
+	if [ "sshd: 192.168.0.: allow" != "$sshd" ] ; then
+		echo 'sshd: 192.168.0.: allow' >> /etc/hosts.allow
+	fi

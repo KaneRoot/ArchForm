@@ -1,0 +1,7 @@
+	pacman=`cat /etc/pacman.conf | grep "archlinuxfr"`
+	if [ -n "$pacman" ] ; then
+		echo "pacman.conf est déjà configuré"
+	else
+		echo "[archlinuxfr]" >> /etc/pacman.conf
+		echo "Server = http://repo.archlinux.fr/i686/" >> /etc/pacman.conf
+	fi

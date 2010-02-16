@@ -1,0 +1,14 @@
+	echo "#############################################################"
+	echo "################### Configuration de Sudo ###################"
+	echo "#############################################################"
+	echo "Les utilisateurs que vous entrerez auront les droits root avec sudo ! BE AWARE !!!"
+	
+	read -p "Entrez la liste des futurs utilisateurs de sudo : " rep_users
+	
+	for user in $rep_users
+	do
+	estdansfichier=`cat /etc/sudoers | grep $user | cut -d' ' -f1`	
+		if [ "$user" != "$estdansfichier" ] ; then	
+			echo $user " ALL=(ALL) ALL" >> /etc/sudoers
+		fi
+	done
