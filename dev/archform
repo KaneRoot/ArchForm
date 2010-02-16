@@ -1,363 +1,75 @@
 #!/bin/bash
 
-#Pour toute réclamation : kane.root@gmail.com
-
-#rep_int : installer ou non une interface
-#rep_interface : nom de l'interface à installer
+UID_ROOT=0 # Sert à vérifier que l'utilisateur est bien root
+ERREUR_ROOT=1
+ERREUR_CHOIX=2
 #tab : tableau qui contiendra tous les logiciels à installer
-## 1) l'interface graphique
-## 2) logiciels à installer peu importe l'interface graphique sélectionnée
-#########################################################################
+##	      tab[0]) gestionnaire de connexion
+##	      tab[1]) l'interface graphique
+## de tab[002 à 099]) logiciels ne nécessitant pas d'interface graphique
 ## de tab[100 à 199]) logiciels nécessitant une interface graphique (GNOME)
 ## de tab[200 à 299]) logiciels nécessitant une interface graphique (KDE)
-## de tab[300 à FIN]) logiciels ne nécessitant pas d'interface
-## installation du dépôt d'archlinux.fr
-
-	pacman=`cat /etc/pacman.conf | grep "archlinuxfr"`
-	if [ -n "$pacman" ] ; then
-		echo "pacman.conf est déjà configuré"
-	else
-		echo "[archlinuxfr]" >> /etc/pacman.conf
-		echo "Server = http://repo.archlinux.fr/i686/" >> /etc/pacman.conf
-	fi
-	
-	UID_ROOT=0 # Sert à vérifier que l'utilisateur est bien root
 
 	if [ $UID != $UID_ROOT ] ; then
 		echo "Il faut se connecter en root ;) "
-		exit 1
+		exit $ERREUR_ROOT
 	fi
-	
 	pacman -Syu
 	pacman -S yaourt
 	yaourt -Syu ## Pour être sûr ;)
 
-#########################################################################
-#########################################################################
-	
- 	echo -e "\nVoulez-vous installer une interface graphique ?"
-	read -p "O/N : " rep_int
-	
-	case $rep_int in
-		"O" | "o" | "oui" | "Oui" | "OUI")
-				rep_int='O'
-				;;
-		"N" | "n" | "non" | "Non" | "NON")
-				rep_int='N'
-				rep_interface='AUCUNE_INTERFACE'
-				;;
-		*)
-			echo "ERREUR"
-			exit 2
-			;;
-	esac	
+# pré-configuration de pacman.conf
+	. include/pacman
+# Ma fonction faire_demande
+	. include/fonctions
 
-	if [ "$rep_int" = "O" ] ; then
-		read -p "Gnome / Kde ? : " rep_interface
-		
-		case $rep_interface in 
-			"Gnome" | "gnome" | "g" | "G")
-				tab[1]='gnome'
-				rep_interface='GNOME'
-				;;
-			"Kde" | "k" | "K" | "kde")
-				tab[1]='kde-meta-kdebase kde-meta-kdeartwork kde-l10n-fr'
-				rep_interface='KDE'
-				;;
-			*)
-				echo "ERREUR: Vous devez choisir une interface graphique !"
-				exit 3
-				;;
-		esac
-		
-	fi
-	echo "À partir de maintenant la casse n'est plus tolérée"
-	echo "Vous devrez écrire en minuscule"
-
-#########################################################################
-####### Partie "Logiciels appliqués à une interface graphique" ##########
-#########################################################################
-
-	if [ "$rep_interface" = "GNOME" ] ; then
-		echo "Choisissez les logiciels à installer pour $rep_"
-	
-		read -p "Rhythmbox (écoute audio) o/n : " rep_rhythmbox
-		read -p "Gajim (jabber) o/n : " rep_gajim
-		read -p "Emesene (client MSN) o/n : " rep_emesene
-		read -p "VLC (lecteur audio/video) o/n : " rep_vlc
-		read -p "Transmission (client Bittorrent) o/n : " rep_transmission
-		read -p "Midori (navigateur internet très léger) o/n : " rep_midori
-		read -p "Firefox (navigateur internet) o/n : " rep_firefox
-		read -p "Gedit (éditeur de texte) o/n : " rep_gedit
-		read -p "evince (lecteur PDF) : o/n : " rep_evince
-		read -p "abiword (traitement de texte) : " rep_abiword
-		read -p "network-manager (utilitaire réseau)" rep_network_manager
-		
-		#### Ajout des logiciels à la liste 
-		if [ "$rep_rhythmbox" = "o" ] ; then
-			tab[100]='rhythmbox'
-		fi
-		
-		if [ "$rep_gajim" = "o" ] ; then 
-			tab[101]='gajim'
-		fi
-		
-		if [ "$rep_emesene" = "o" ] ; then
-			tab[102]='emesene'
-		fi
-		
-		if [ "$rep_vlc" = "o" ] ; then
-			tab[103]='vlc libdvbpsi'
-		fi
-		
-		if [ "$rep_transmission" = "o" ] ; then
-			tab[104]='transmission-gtk'
-		fi
-		
-		if [ "$rep_midori" = "o" ] ; then
-			tab[105]='midori'
-		fi
-		
-		if [ "$rep_firefox" = "o" ] ; then
-		## J'installe également le dico fr
-			tab[106]='firefox firefox-fr firefox-spell-fr_fr'
-		fi
-		
-		if [ "$rep_gedit" = "o" ] ; then
-			tab[107]='gedit'
-		fi
-		
-		if [ "$rep_evince" = "o" ] ; then
-			tab[108]='evince'
-		fi
-		if [ "$rep_abiword" = "o" ] ; then
-			tab[109]='abiword abiword-plugins'
-		fi
-		
-		if [ "$rep_network_manager" = "o" ] ; then
-			tab[110]='networkmanager network-manager-applet networkmanager-openvpn'
-		fi
-		 
-		
-############### Nous passons maintenant à KDE ###########################
-
-
-	elif [ "$rep_interface" = "KDE" ] ; then
-
-		echo "Choisissez les logiciels à installer pour $rep_interface"
-		read -p "Amarok (écoute audio) o/n : " rep_amarok
-		read -p "Gajim (jabber) o/n : " rep_gajim
-		read -p "Emesene (client MSN) o/n : " rep_emesene
-		read -p "VLC (lecteur audio/video) o/n : " rep_vlc
-		read -p "Transmission (client Bittorrent) o/n : " rep_transmission
-		read -p "Midori (navigateur internet très léger) o/n : " rep_midori
-		read -p "Firefox (navigateur internet) o/n : " rep_firefox
-		read -p "Gedit (éditeur de texte) o/n : " rep_gedit
-		read -p "Okular (lecteur pdf)" rep_okular
-		read -p "abiword (traitement de texte) : " rep_abiword
-		
-		if [ "$rep_amarok" = "o" ] ; then
-			tab[200]='amarok-git'
-		fi
-		
-		if [ "$rep_gajim" = "o" ] ; then 
-			tab[201]='gajim'
-		fi
-		
-		if [ "$rep_emesene" = "o" ] ; then
-			tab[202]='emesene'
-		fi
-		
-		if [ "$rep_vlc" = "o" ] ; then
-			tab[203]='vlc libdvbpsi'
-		fi
-		
-		if [ "$rep_transmission" = "o" ] ; then
-			tab[204]='transmission-qt'
-		fi
-		
-		if [ "$rep_midori" = "o" ] ; then
-			tab[205]='midori'
-		fi
-		
-		if [ "$rep_firefox" = "o" ] ; then
-		## J'installe également le dico fr
-			tab[206]='firefox firefox-fr firefox-spell-fr_fr'
-		fi
-		
-		if [ "$rep_gedit" = "o" ] ; then
-			tab[207]='gedit'
-		fi
-		
-		if [ "$rep_evince" = "o" ] ; then
-			tab[208]='evince'
-		fi
-		
-		if [ "$rep_abiword" = "o" ] ; then
-			tab[209]='abiword abiword-plugins'
-		fi
-		
-		if [ "$rep_network_manager" = "o" ] ; then
-			tab[210]='networkmanager knetworkmanager'
-		fi
-				
-	fi
-#########################################################################
 ############### Partie utilitaires indispensables #######################
-#########################################################################
 
 ## tout d'abord : le pack "archives" 
-	tab[300]='zip unzip unrar gzip bzip2 zlib' 
+	tab[2]='zip unzip unrar gzip bzip2 zlib' 
 ## sudo, car sudo est très pratique et recommandé
-	tab[301]='sudo'
+	tab[3]='sudo'
 ## hal+dbus pour la gestion du matériel
-	tab[302]='hal dbus'
+	tab[4]='hal dbus'
 ## éditeur de texte : vim
-	tab[303]='vim'
-## Le gestionnaire de connexion : gdm ou kdm
-
-	if [ "$rep_interface" = "GNOME" ] ; then
-		tab[304]='gdm'
+	tab[5]='vim'
+# choix de l'interface graphique
+	. include/interface_graphique
+# serveur ssh : openssh !	
+	tab[307]='openssh'
 	
-	elif [ "$rep_interface" = "KDE" ] ; then
-		tab[304]='kdm'
+####### Partie "Logiciels appliqués à une interface graphique" ##########
+
+	if [ "${tab[1]}" = "gnome" ] ; then
+		echo "Choisissez les logiciels à installer pour GNOME"
+		. include/GNOME		
+	elif [ "${tab[1]}" = "kde" ] ; then
+		echo "Choisissez les logiciels à installer pour KDE"
+		. include/KDE
 	fi
 	
 ## les logiciels à installer peu importe l'interface graphique choisie
 
-	if [ "$rep_int" = "o" ] ; then # (si interface graphique)
-		tab[305]='flashplugin ttf-ms-fonts' ## pour les sites qui en ont besoin
-		tab[306]='mirage' ## pour les images
+	if [ -n "${tab[1]}" ] ; then # (si interface graphique)
+		tab[5]='flashplugin ttf-ms-fonts' ## pour les sites qui en ont besoin
+		tab[6]='mirage' ## pour les images
 	fi 
 	
-## un serveur ssh : openssh !
-	tab[307]='openssh'
-	
 
-#########################################################################
-############### Partie installation des logiciels #######################
-#########################################################################
+#### INSTALLATION
 
-	 yaourt -S ${tab[*]}
+#	 yaourt -S ${tab[*]}
 	 
-#########################################################################
-############### Partie configuration de la machine ######################
-#########################################################################
-## ajout d'utilisateurs
-	var_inutile=0
-	while [ "$rep_useradd" = "o" ] || [ "$var_inutile" -eq "0" ]
-	do
-		read -p "Ajout d'un utilisateur o/n : " rep_useradd
-		if [ "$rep_useradd" = "o" ] ; then
-			
-			read -p "nom d'utilisateur (en minuscules) : " rep_username
-			useradd $rep_username
-		fi
-		var_inutile=1
-	done
-## configuration de : sudo
-	echo "#############################################################"
-	echo "################### Configuration de Sudo ###################"
-	echo "#############################################################"
-	echo "Les utilisateurs que vous entrerez auront les droits root avec sudo ! BE AWARE !!!"
-	
-	read -p "Entrez la liste des futurs utilisateurs de sudo : " rep_users
-	
-	for user in $rep_users
-	do
-	estdansfichier=`cat /etc/sudoers | grep $user | cut -d' ' -f1`	
-		if [ "$user" != "$estdansfichier" ] ; then	
-			echo $user " ALL=(ALL) ALL" >> /etc/sudoers
-		fi
-	done
-	
-## configuration de : rc.conf
-	
-	rc='/etc/rc.conf'
+#### CONFIGURATION
 
-	echo "#############################################################"
-	echo "################### Édition du fichier rc.conf ##############"
-	echo "#############################################################"
-	
-	read -p "Par défaut LOCALE=\"fr_FR.UTF-8\"  Conserver ? o/n : " rep_locale
-	read -p "Par défaut HARDWARECLOCK=\"\" Conserver ? o/n : " rep_hardwareclock
-	read -p "Par défaut TIMEZONE=\"Europe/Paris\" Conserver ? o/n : " rep_timezone
-	read -p "Par défaut KEYMAP=\"fr-latin9\" Conserver ? o/n : " rep_keymap
-	read -p "Par défaut CONSOLEFONT=\"lat9w-16\" Conserver ? o/n : " rep_consolefont
-	read -p "Par défaut CONSOLEMAP=\"\" Conserver ? o/n : " rep_consolemap
-	read -p "Par défaut USECOLOR=\"yes\" Conserver ? o/n : " rep_usecolor
-	
-	if [ "$rep_locale" = "o" ] ; then
-		rep_locale="fr_FR.UTF-8"
-	else
-		read -p "Entrez la valeur de LOCALE : " rep_locale
-	fi
-	
-	if [ "$rep_hardwareclock" = "o" ] ; then
-		rep_hardwareclock=""
-	else
-		read -p "Entrez la valeur de HARDWARECLOCK : " rep_hardwareclock
-	fi
-	
-	if [ "$rep_timezone" = "o" ] ; then
-		rep_timezone="Europe/Paris"
-	else
-		read -p "Entrez la valeur de timezone : " rep_timezone
-	fi	
-	
-	if [ "$rep_keymap" = "o" ] ; then
-		rep_keymap="fr-latin9"
-	else
-		read -p "Entrez la valeur de KEYMAP : " rep_keymap
-	fi
-
-	if [ "$rep_consolefont" = "o" ] ; then
-		rep_consolefont="lat9w-16"
-	else
-		read -p "Entrez la valeur de CONSOLEFONT : " rep_consolefont
-	fi	
-	
-	if [ "$rep_consolemap" = "o" ] ; then
-		rep_consolemap=""
-	else
-		read -p "Entrez la valeur de CONSOLEMAP : " rep_consolemap
-	fi	
-
-	if [ "$rep_usecolor" = "o" ] ; then
-		rep_usecolor="yes"
-	else
-		rep_usecolor="no"
-	fi
-	
-	cat $rc | head -n 17 > rc.conf.part1
-	cat $rc | tail -n 67 > rc.conf.part2
-	rm $rc
-	echo "LOCALE="$rep_locale"
-HARDWARECLOCK="$rep_hardwareclock"
-TIMEZONE="$rep_timezone"
-KEYMAP="$rep_keymap"
-CONSOLEFONT="$rep_consolefont"
-CONSOLEMAP="$rep_consolemap"
-USECOLOR="$rep_usecolor >> rc.conf.part1
-	cat rc.conf.part2 >> rc.conf.part1
-	rm rc.conf.part2
-	mv rc.conf.part1 $rc
-	chmod 644 $rc
-	
-	
-
-## configuration de : openssh (connexion depuis le réseau local)
-	sshd=`cat /etc/hosts.allow | grep "sshd : 192.168.0.: allow"`
-	if [ "sshd: 192.168.0.: allow" != "$sshd" ] ; then
-		echo 'sshd: 192.168.0.: allow' >> /etc/hosts.allow
-	fi
-
-#########################################################################
-################ Partie "choses à dire en partant" ######################
-#########################################################################
-
-	echo "Choses à dire :"
-	echo "Configuration de certains paramètres seulement"
-	echo "Mon tableau actuel : " ${tab[*]} 
+## ajout d'utilisateurs, configuration de sudo, du rc.conf, d'openssh
+	. include/useradd
+	. include/sudoers
+	. include/rc	
+	. include/openssh
+# test
+	echo ${tab[*]}
 
 exit 0
+
+#Pour toute réclamation : kane.root@gmail.com
