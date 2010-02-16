@@ -15,4 +15,5 @@
 		faire_demande "Abiword (traitement de texte)" 209 "abiword abiword-plugins"
 		faire_demande "Network-manager (utilitaire réseau)" 210 "networkmanager knetworkmanager"
 		faire_demande "Epdfview (lecteur pdf)" 211 "epdfview"
-
+		faire_demande "flashplugin" 212 "flashplugin ttf-ms-fonts"
+		faire_demande "mirage (lecteur de fichiers image)" 213 "mirage"

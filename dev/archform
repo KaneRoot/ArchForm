@@ -5,18 +5,18 @@ ERREUR_CHOIX=2
 #tab : tableau qui contiendra tous les logiciels à installer
 ##	      tab[0]) gestionnaire de connexion
 ##	      tab[1]) l'interface graphique
-## de tab[002 à 099]) logiciels ne nécessitant pas d'interface graphique
-## de tab[100 à 199]) logiciels nécessitant une interface graphique (GNOME)
-## de tab[200 à 299]) logiciels nécessitant une interface graphique (KDE)
-
-	if [ -n "$USER" ] ; then
+##  de tab[002 à 099]) logiciels ne nécessitant pas d'interface graphique
+##  de tab[100 à 199]) logiciels nécessitant une interface graphique (GNOME)
+##  de tab[200 à 299]) logiciels nécessitant une interface graphique (KDE)
+	if [ -n $UID ] ; then
 		echo "Il faut se connecter en root ;) "
 		exit $ERREUR_ROOT
 	fi
-	pacman -Syu
-	pacman -S yaourt
-	yaourt -Syu ## Pour être sûr ;)
 
+	pacman -Sy
+	pacman -S yaourt
+	yaourt -Syu ## Pour être à jour ;)
+	
 # pré-configuration de pacman.conf
 	. include/pacman
 # Ma fonction faire_demande
@@ -24,51 +24,35 @@ ERREUR_CHOIX=2
 
 ############### Partie utilitaires indispensables #######################
 
-## tout d'abord : le pack "archives" 
-	tab[2]='zip unzip unrar gzip bzip2 zlib' 
-## sudo, car sudo est très pratique et recommandé
-	tab[3]='sudo'
-## hal+dbus pour la gestion du matériel
-	tab[4]='hal dbus'
-## éditeur de texte : vim
-	tab[5]='vim'
+# Les logiciels sans interface graphique
+	. include/sans_gui
+	
 # choix de l'interface graphique
 	. include/interface_graphique
-# serveur ssh : openssh !	
-	tab[307]='openssh'
 	
 ####### Partie "Logiciels appliqués à une interface graphique" ##########
 
-	if [ "${tab[1]}" = "gnome" ] ; then
+	if [ "$rep_interface" = "GNOME" ] ; then
 		echo "Choisissez les logiciels à installer pour GNOME"
 		. include/GNOME		
-	elif [ "${tab[1]}" = "kde" ] ; then
+	elif [ "$rep_interface" = "KDE" ] ; then
 		echo "Choisissez les logiciels à installer pour KDE"
 		. include/KDE
 	fi
-	
-## les logiciels à installer peu importe l'interface graphique choisie
-
-	if [ -n "${tab[1]}" ] ; then # (si interface graphique)
-		tab[5]='flashplugin ttf-ms-fonts' ## pour les sites qui en ont besoin
-		tab[6]='mirage' ## pour les images
-	fi 
-	
-
+		
 #### INSTALLATION
 
-#	 yaourt -S ${tab[*]}
+	 yaourt -S ${tab[*]}
 	 
 #### CONFIGURATION
 
-## ajout d'utilisateurs, configuration de sudo, du rc.conf, d'openssh
+## ajout d'utilisateurs, configuration de sudo, du rc.conf, d'openssh, d'alsa
 	. include/useradd
 	. include/sudoers
 	. include/rc	
 	. include/openssh
-# test
-	echo ${tab[*]}
-
+	. include/alsa
+	
 exit 0
 
 #Pour toute réclamation : kane.root@gmail.com

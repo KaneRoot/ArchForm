@@ -14,3 +14,5 @@
 		faire_demande "evince (lecteur PDF)" 108 "evince"
 		faire_demande "abiword (traitement de texte)" 109 "abiword abiword-plugins"
 		faire_demande "network-manager (utilitaire réseau)" 110 "networkmanager network-manager-applet networkmanager-openvpn"
+		faire_demande "flashplugin" 111 "flashplugin ttf-ms-fonts"
+		faire_demande "mirage (lecteur de fichiers image" 112 "mirage"

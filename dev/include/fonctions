@@ -4,6 +4,7 @@ function faire_demande {
 	case $rep in
 		"o" | "O" | "oui" | "OUI" | "Oui") tab[$2]="$3" ;;
 		"n" | "N" | "oui" | "NON" | "Non") : ;;
-		*) exit $ERREUR_CHOIX ;;
+		*) echo "ERREUR: la bonne réponse était \"o\" ou \"n\" ! :)"
+		exit $ERREUR_CHOIX ;;
 	esac
 }
