@@ -223,14 +223,16 @@
 		tab[304]='kdm'
 	fi
 	
-## un plugin flash pour les sites qui en ont besoin 
+## les logiciels à installer peu importe l'interface graphique choisie
 
 	if [ "$rep_int" = "o" ] ; then # (si interface graphique)
-		tab[305]='flashplugin'
+		tab[305]='flashplugin ttf-ms-fonts' ## pour les sites qui en ont besoin
+		tab[306]='mirage' ## pour les images
 	fi 
 	
 ## un serveur ssh : openssh !
-	tab[306]='openssh'
+	tab[307]='openssh'
+	
 
 #########################################################################
 ############### Partie installation des logiciels #######################
