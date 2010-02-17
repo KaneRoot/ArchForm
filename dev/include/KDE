@@ -17,3 +17,4 @@
 		faire_demande "Epdfview (lecteur pdf)" 211 "epdfview"
 		faire_demande "flashplugin" 212 "flashplugin ttf-ms-fonts"
 		faire_demande "mirage (lecteur de fichiers image)" 213 "mirage"
+		faire_demande "Xsane (pour votre scanner)" 214 "xsane"

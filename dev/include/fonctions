@@ -1,10 +1,76 @@
 #faire_demande "nomdulogicielàinstaller" "indicedutableau" "nomdepaquet"
-function faire_demande {
-	read -p "$1 voulez-vous l'installer ? o/n : " rep
-	case $rep in
-		"o" | "O" | "oui" | "OUI" | "Oui") tab[$2]="$3" ;;
-		"n" | "N" | "oui" | "NON" | "Non") : ;;
-		*) echo "ERREUR: la bonne réponse était \"o\" ou \"n\" ! :)"
-		exit $ERREUR_CHOIX ;;
-	esac
+function install_gnome {
+
+	## Partie "préliminaires"
+	# pré-configuration de pacman.conf
+	. include/pacman
+	
+	# initialisation du tableau
+	tab=()
+	
+	## Là on prépare les installations :)
+	# Les logiciels sans interface graphique
+	. include/sans_gui
+	
+	# on substitu la fonction "demander" par "accepter" :) 
+	. include/fct_accepter
+	
+	# on ajoute les logiciels à installer
+	. include/GNOME
+	
+	## Là on installe ! 
+	yaourt -S ${tab[*]}
+	
+	# On termine par la configuration :)
+	
+	. include/useradd
+	. include/sudoers
+	. include/rc	
+	. include/openssh
+	. include/alsa
+	# il n'y a pas plus simple :)
+}
+function install_kde {
+	
+	## EXACTEMENT LA MÊME CHOSE QU'EN HAUT
+	. include/pacman
+	
+	tab=()
+	
+	. include/sans_gui
+	
+	. include/fct_accepter
+	
+	. include/KDE # sauf là évidemment :)
+	 
+	yaourt -S ${tab[*]}
+	
+	. include/useradd
+	. include/sudoers
+	. include/rc	
+	. include/openssh
+	. include/alsa
+}
+function install_sans_interface {
+
+	## EXACTEMENT LA MÊME CHOSE QU'EN HAUT
+	. include/pacman
+	
+	tab=()
+	
+	. include/sans_gui
+	
+	. include/fct_accepter
+
+# il manque pas quelque-chose ? 
+## ...
+## Ah ben non, pas d'interface ! :)	
+		 
+	yaourt -S ${tab[*]}
+	
+	. include/useradd
+	. include/sudoers
+	. include/rc	
+	. include/openssh
+	. include/alsa
 }
