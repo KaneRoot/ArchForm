@@ -1,0 +1,30 @@
+#!/bin/bash
+
+	ERREUR_ROOT=1
+	ERREUR_CHOIX=2
+	ERREUR_ARG=3
+	
+	if [ -z $UID ] ; then
+		echo "Il faut se connecter en root ;) "
+	exit $ERREUR_ROOT
+	fi
+	
+	# je prend mes fonctions toutes prêtes :)
+	. include/fonctions
+	
+	if [ $# -lt 1 ] ; then
+		. formulaire
+	elif [ "$#" = 1 ] ; then
+		case "$1" in 
+			"-g" | "--gnome") install_gnome ;;
+			"-k" | "--kde") install_kde ;;
+			"-s" | "--sans-ig") install_sans_interface ;;
+			"-h" | "--help") echo "Tapez: $0 [--gnome|--kde|--sans-ig]" ;;
+			*) exit $ERREUR_ARG;;
+		esac
+	else
+		echo "Tapez: $0 [--gnome|--kde|--sans-ig]"
+		exit $ERREUR_ARG
+	fi
+	
+	exit 0
