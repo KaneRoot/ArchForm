@@ -1,0 +1,35 @@
+Bonjour
+
+Vous êtes dans mon fichier "README" :) Vous pouvez être content
+
+Mon script sert à une chose : installer la base de votre système
+d'exploitation préféré : ArchLinux :) 
+
+Il fonctionne très simplement. 
+
+HOW TO: faire marcher ArchForm :) 
+
+1) être en root : su
+2) rendre le script exécutable : chmod +x ArchForm
+3) lancer le script (pas trop loin !!!) : ./ArchForm
+
+## Pour les plus feignants
+
+Vous pouvez simplement lancer ./ArchForm [--gnome|--kde|--sans-interface]
+Explications :
+--gnome => installe Gnome et tous les logiciels inclus dans include/GNOME
+donc par défaut vous avez tous les logiciels nécessaires pour bosser avec 
+Archlinux :) 
+
+--kde => besoin d'expliquer ? Même chose qu'en haut mais avec Kde évidemment ! :)
+--sans-interface => Seuls les logiciels sans interface sont installés :)
+
+Et bien entendu, il y a une partie "configuration" qui se fait toute seule, 
+comme le rc.conf : on vous installe le nécessaire, pas plus.
+
+Tout ça pour avoir un système fonctionnel, sans avoir à tripatouiller 
+les fichiers de configuration :)
+J'suis sympa hein ?
+
+PS: je posterai des mises à jour du script, pour lui donner toujours plus de 
+fonctionnalités, alors revenez vite ;)
