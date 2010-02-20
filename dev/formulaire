@@ -12,7 +12,7 @@
 # pré-configuration de pacman.conf
 	. include/pacman
 # Ma fonction faire_demande
-	. include/fonctions
+	. include/fct_demander
 
 ############### Partie utilitaires indispensables #######################
 
