@@ -1,5 +1,7 @@
+#!/bin/bash
+
 	var_inutile=0
-	while [ "$rep_useradd" = "o" ] || [ -z $var_inutile ]
+	while [ "$rep_useradd" = "o" ] || [ $var_inutile -lt 1 ]
 	do
 		read -p "Ajout d'un utilisateur o/n : " rep_useradd
 		if [ "$rep_useradd" = "o" ] ; then

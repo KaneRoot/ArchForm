@@ -1,9 +1,10 @@
 #  Ici vous pouvez rajouter des logiciels comme bon vous semble :) 
 #+ Il suffit de faire : 
 #+ faire_demande "nom du logiciel" nombre_du_dessus+1 "nom_du_paquet_à_installer"
-
+		# On demande si c'est bien ce gestionnaire de démarrage que l'utilisateur souhaite :)
 		faire_demande "KDM (gestionnaire de connexion)" 0 "kdm"
-		faire_demande "Amarok (écoute audio)" 200 "amarok-git"
+		# Là pas de question : le serveur X
+		tab[200]="xorg xf86-input-evdev xf86-input-synaptics"
 		faire_demande "Gajim (jabber) o/n : " 201 "gajim"
 		faire_demande "Emesene (client MSN) o/n : " 202 "emesene"
 		faire_demande "VLC (lecteur audio/video) o/n : " 203 "vlc libdvbpsi"
@@ -18,3 +19,4 @@
 		faire_demande "flashplugin" 212 "flashplugin ttf-ms-fonts"
 		faire_demande "mirage (lecteur de fichiers image)" 213 "mirage"
 		faire_demande "Xsane (pour votre scanner)" 214 "xsane"
+		faire_demande "Amarok (écoute audio)" 215 "amarok-git"

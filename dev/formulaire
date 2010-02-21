@@ -7,43 +7,59 @@
 
 	pacman -Sy
 	pacman -S yaourt
-	yaourt -Syu ## Pour être à jour ;)
+	yaourt -Sy ## Pour être à jour ;)
 	
 # pré-configuration de pacman.conf
-	. include/pacman
+	. $REPERTOIRE/include/pacman
 # Ma fonction faire_demande
-	. include/fct_demander
+	. $REPERTOIRE/include/fct_demander
 
 ############### Partie utilitaires indispensables #######################
 
 # Les logiciels sans interface graphique
-	. include/sans_gui
-	
+	. $REPERTOIRE/include/sans_gui
+	clear
 # choix de l'interface graphique
-	. include/interface_graphique
-	
+	. $REPERTOIRE/include/interface_graphique
+	clear
 ####### Partie "Logiciels appliqués à une interface graphique" ##########
 
 	if [ "$rep_interface" = "GNOME" ] ; then
 		echo "Choisissez les logiciels à installer pour GNOME"
-		. include/GNOME		
+		. $REPERTOIRE/include/GNOME		
+		# configuration de xorg
+		. $REPERTOIRE/include/xorg
+		clear
 	elif [ "$rep_interface" = "KDE" ] ; then
 		echo "Choisissez les logiciels à installer pour KDE"
-		. include/KDE
+		. $REPERTOIRE/include/KDE
+		# configuration de xorg
+		. $REPERTOIRE/include/xorg
+		clear
 	fi
 		
 #### INSTALLATION
 
 	 yaourt -S ${tab[*]}
+	 yaourt -Syu
+	 clear
 	 
 #### CONFIGURATION
 
 ## ajout d'utilisateurs, configuration de sudo, du rc.conf, d'openssh, d'alsa
-	. include/useradd
-	. include/sudoers
-	. include/rc	
-	. include/openssh
-	. include/alsa
+
+	. $REPERTOIRE/include/useradd
+	clear
+	. $REPERTOIRE/include/sudoers
+	clear
+	. $REPERTOIRE/include/rc
+	clear
+	. $REPERTOIRE/include/openssh
+	clear
+	. $REPERTOIRE/include/alsa
+	
+	clear
+	echo "Voilà, c'est terminé. Bonne chance sur ArchLinux !"
 	
 exit 0
 

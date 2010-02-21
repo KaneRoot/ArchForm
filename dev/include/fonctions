@@ -3,74 +3,86 @@ function install_gnome {
 
 	## Partie "préliminaires"
 	# pré-configuration de pacman.conf
-	. include/pacman
+	. $REPERTOIRE/include/pacman
+	# installation de yaourt + MÀJ
 	
+	pacman -Sy
+	pacman -S yaourt
+	yaourt -Sy
+	clear
 	# initialisation du tableau
 	tab=()
 	
-	## Là on prépare les installations :)
-	# Les logiciels sans interface graphique
-	. include/sans_gui
-	
 	# on substitu la fonction "demander" par "accepter" :) 
-	. include/fct_accepter
-	
+	. $REPERTOIRE/include/fct_accepter
+		
+	## Là on prépare les installations :)
 	# on ajoute les logiciels à installer
-	. include/GNOME
-	
+	. $REPERTOIRE/include/GNOME
+	clear
+	# Les logiciels sans interface graphique
+	. $REPERTOIRE/include/sans_gui
+	clear
 	## Là on installe ! 
 	yaourt -S ${tab[*]}
 	
 	# On termine par la configuration :)
 	
-	. include/useradd
-	. include/sudoers
-	. include/rc	
-	. include/openssh
-	. include/alsa
-	# il n'y a pas plus simple :)
+	# configuration de xorg
+	. $REPERTOIRE/include/xorg
+	
+	make_conf
+
 }
 function install_kde {
 	
 	## EXACTEMENT LA MÊME CHOSE QU'EN HAUT
-	. include/pacman
-	
+	. $REPERTOIRE/include/pacman
+	pacman -Sy
+	pacman -S yaourt
+	yaourt -Sy
+	clear
 	tab=()
+	. $REPERTOIRE/include/fct_accepter
 	
-	. include/sans_gui
-	
-	. include/fct_accepter
-	
-	. include/KDE # sauf là évidemment :)
-	 
+	. $REPERTOIRE/include/KDE # sauf là évidemment :)
+	clear
+	. $REPERTOIRE/include/sans_gui
+	clear	 
 	yaourt -S ${tab[*]}
+	. $REPERTOIRE/include/xorg
 	
-	. include/useradd
-	. include/sudoers
-	. include/rc	
-	. include/openssh
-	. include/alsa
+	make_conf
+
 }
 function install_sans_interface {
 
 	## EXACTEMENT LA MÊME CHOSE QU'EN HAUT
-	. include/pacman
-	
+	. $REPERTOIRE/include/pacman
+	pacman -Sy
+	pacman -S yaourt
+	yaourt -Sy
+	clear
 	tab=()
 	
-	. include/sans_gui
+	. $REPERTOIRE/include/fct_accepter
 	
-	. include/fct_accepter
-
-# il manque pas quelque-chose ? 
-## ...
-## Ah ben non, pas d'interface ! :)	
-		 
+	. $REPERTOIRE/include/sans_gui
+	clear
 	yaourt -S ${tab[*]}
+	clear
+	make_conf
+}
+function make_conf {
 	
-	. include/useradd
-	. include/sudoers
-	. include/rc	
-	. include/openssh
-	. include/alsa
+	. $REPERTOIRE/include/useradd
+	clear
+	. $REPERTOIRE/include/sudoers
+	clear
+	. $REPERTOIRE/include/rc
+	clear	
+	. $REPERTOIRE/include/openssh
+	clear
+	. $REPERTOIRE/include/alsa
+	clear
 }
