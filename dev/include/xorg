@@ -1,0 +1,5 @@
+#!/bin/bash
+	
+	cp $REPERTOIRE/include/10-keymap.fdi /usr/share/hal/fdi/policy/10osvendor/10-keymap.fdi 
+	cp $REPERTOIRE/include/10-keymap.fdi /etc/hal/fdi/policy
+	

@@ -1,0 +1,7 @@
+# dans ce cas : faire_demande = accepter automatiquement les paquets
+# voir fct_demander pour l'utilisation
+
+function faire_demande {
+	tab[$2]="$3"
+}
+

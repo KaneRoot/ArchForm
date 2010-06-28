@@ -5,11 +5,8 @@ REPERTOIRE=`pwd`
 	ERREUR_ROOT=1
 	ERREUR_CHOIX=2
 	ERREUR_ARG=3
-	
-	if [ -z $UID ] ; then
-		echo "Il faut se connecter en root ;) "
-	exit $ERREUR_ROOT
-	fi
+		
+	[ -n $UID ] || { echo "Il faut être en ROOT ;) " ; exit $ERREUR_ROOT ; }
 	
 	# je prend mes fonctions toutes prêtes :)
 	. $REPERTOIRE/include/fonctions

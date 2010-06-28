@@ -1,0 +1,11 @@
+	read -p "Configurer alsa? (conseillé pour avoir du son :) ) o/n : " conf_alsa
+	case $conf_alsa in
+		"o" | "O" | "Oui" | "OUI")				
+		alsaconf
+		alsamixer
+		alsactl store
+			;;
+		*)
+			echo "nous n'avons pas configuré Alsa"
+			;;
+	esac

@@ -1,0 +1,11 @@
+#faire_demande "nomdulogicielàinstaller" "indicedutableau" "nomdepaquet"
+
+function faire_demande {
+	read -p "$1 voulez-vous l'installer ? o/n : " rep
+	case "$rep" in
+		"o" | "O" | "oui" | "OUI" | "Oui") tab[$2]="$3" ;;
+		"n" | "N" | "oui" | "NON" | "Non") : ;;
+		*) echo "ERREUR: la bonne réponse était \"o\" ou \"n\" ! :)"
+		exit $ERREUR_CHOIX ;;
+	esac
+}

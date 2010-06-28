@@ -1,0 +1,24 @@
+# Nolant !
+
+
+## tout d'abord : le pack "archives" 
+	tab[2]='zip unzip unrar gzip bzip2 zlib' 
+## sudo, car sudo est très pratique et recommandé
+	tab[3]='sudo'
+## hal+dbus pour la gestion du matériel
+	tab[4]='hal dbus'
+## éditeur de texte : vim
+	tab[5]='vim'
+# serveur ssh : openssh !	
+	tab[6]='openssh'
+# serveur audio	
+	tab[7]='alsa-lib alsa-utils alsa-oss'
+# syslog-ng
+	tab[8]='syslog-ng'
+# pack de polices
+	tab[9]='xorg-fonts-type1 ttf-dejavu artwiz-fonts font-bh-ttf font-bitstream-speedo gsfonts sdl_ttf ttf-bitstream-vera ttf-cheapskate ttf-ms-fonts'
+
+## Vous pouvez éditer ce fichier et ajouter ce que vous voulez ;)
+
+#  et si vous voulez laisser le choix de l'installation ou non à l'utilisateur final:
+#+ faire_demande "nomdulogicielàinstaller" "indicedutableau" "nomdepaquet"
