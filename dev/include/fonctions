@@ -13,7 +13,7 @@ function install_gnome {
 	# initialisation du tableau
 	tab=()
 	
-	# on substitu la fonction "demander" par "accepter" :) 
+	# on substitue la fonction "demander" par "accepter" :) 
 	. $REPERTOIRE/include/fct_accepter
 		
 	## Là on prépare les installations :)
@@ -55,9 +55,28 @@ function install_kde {
 	make_conf
 
 }
+function install_openbox {
+	
+	. $REPERTOIRE/include/pacman
+	pacman -Sy
+	pacman -S yaourt
+	yaourt -Sy
+	clear
+	tab=()
+	. $REPERTOIRE/include/fct_accepter
+	
+	. $REPERTOIRE/include/OPENBOX
+	clear
+	. $REPERTOIRE/include/sans_gui
+	clear
+	yaourt -S ${tab[*]}
+	. $REPERTOIRE/include/xorg
+	
+	make_conf
+
+}
 function install_sans_interface {
 
-	## EXACTEMENT LA MÊME CHOSE QU'EN HAUT
 	. $REPERTOIRE/include/pacman
 	pacman -Sy
 	pacman -S yaourt

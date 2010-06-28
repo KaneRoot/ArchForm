@@ -21,8 +21,9 @@ REPERTOIRE=`pwd`
 			"-g" | "--gnome") install_gnome ;;
 			"-k" | "--kde") install_kde ;;
 			"-s" | "--sans-ig") install_sans_interface ;;
+			"-o" | "--openbox") install_openbox ;;
 			"-h" | "--help") echo "Tapez: $0 [--gnome|--kde|--sans-ig]" ;;
-			*)  echo "Tapez: $0 [--gnome|--kde|--sans-ig]" && exit $ERREUR_ARG;;
+			*)  echo "Tapez: $0 [--gnome|--kde|--sans-ig]" && exit $ERREUR_ARG ;;
 		esac
 	else
 		echo "Tapez: $0 [--gnome|--kde|--sans-ig]"
