@@ -65,14 +65,10 @@ CONSOLEFONT="$rep_consolefont"
 CONSOLEMAP="$rep_consolemap"
 USECOLOR="$rep_usecolor >> rc.conf.part1
 
-## On y va pour les DAEMONS :) allez: tous en CŒUR ! 
+	cat rc.conf.part2 | head -n 65 > rc.conf.part3
 	
-	cat rc.conf.part2 | head -n 65 > rc.conf.part3 # HooooOooOOO !
-	
-	echo "DAEMONS=(syslog-ng @alsa @network @netfs crond hal `echo ${tab[0]}` )" >> rc.conf.part3 # HoooOOO !
-	cat rc.conf.part3 >> rc.conf.part1 # HoOOOOoooOOOOoooOOOO !
+	echo "DAEMONS=(syslog-ng @alsa @network @netfs crond hal `echo ${tab[0]}` )" >> rc.conf.part3
+	cat rc.conf.part3 >> rc.conf.part1
 	rm rc.conf.part2 rc.conf.part3
-	mv rc.conf.part1 $rc # Ho Hoooo !
+	mv rc.conf.part1 $rc
 	chmod 644 $rc
-
-#PS: désolé pour les commentaires pourraves, j'étais en plein trip "Joe Satriani - Crowd Chant"
