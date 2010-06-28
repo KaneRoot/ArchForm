@@ -1,10 +1,12 @@
 #  Ici vous pouvez rajouter des logiciels comme bon vous semble :) 
-#+ Il suffit de faire : 
-#+ faire_demande "nom du logiciel" nombre_du_dessus+1 "nom_du_paquet_à_installer"
+#+ voir le fichier "fct_demander"
+
 		# On demande si c'est bien ce gestionnaire de démarrage que l'utilisateur souhaite :)
 		faire_demande "GDM (gestionnaire de connexion)" 0 "gdm"
+
 		# Là pas de choix : le serveur X :)
 		tab[100]="xorg xf86-input-evdev xf86-input-synaptics"
+
 		faire_demande "Gajim (client jabber)" 101 "gajim"
 		faire_demande "Emesene (client MSN)" 102 "emesene"
 		faire_demande "VLC (lecteur audio/video)" 103 "vlc libdvbpsi"
