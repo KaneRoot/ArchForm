@@ -53,5 +53,3 @@ ERREUR_CHOIX=2
 	. include/alsa
 	
 exit 0
-
-#Pour toute réclamation : kane.root@gmail.com

@@ -24,19 +24,15 @@
 	clear
 ####### Partie "Logiciels appliqués à une interface graphique" ##########
 
-	if [ "$rep_interface" = "GNOME" ] ; then
-		echo "Choisissez les logiciels à installer pour GNOME"
-		. $REPERTOIRE/include/GNOME		
-		# configuration de xorg
-		. $REPERTOIRE/include/xorg
-		clear
-	elif [ "$rep_interface" = "KDE" ] ; then
-		echo "Choisissez les logiciels à installer pour KDE"
-		. $REPERTOIRE/include/KDE
-		# configuration de xorg
-		. $REPERTOIRE/include/xorg
-		clear
-	fi
+	case "$rep_interface" in 
+		"GNOME" ) . $REPERTOIRE/include/GNOME
+				  . $REPERTOIRE/include/xorg
+				  ;;
+		"KDE" )   . $REPERTOIRE/include/KDE
+				  . $REPERTOIRE/include/xorg
+				  ;;
+			* ) : ;;
+	esac
 		
 #### INSTALLATION
 
@@ -45,9 +41,9 @@
 	 clear
 	 
 #### CONFIGURATION
-
+	echo "Passons à la configuration"
 ## ajout d'utilisateurs, configuration de sudo, du rc.conf, d'openssh, d'alsa
-
+	
 	. $REPERTOIRE/include/useradd
 	clear
 	. $REPERTOIRE/include/sudoers
