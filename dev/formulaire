@@ -5,12 +5,14 @@
 ##  de tab[100 à 199]) logiciels nécessitant une interface graphique (GNOME)
 ##  de tab[200 à 299]) logiciels nécessitant une interface graphique (KDE)
 
+# pré-configuration de pacman.conf
+	. $REPERTOIRE/include/pacman
+
 	pacman -Sy
 	pacman -S yaourt
 	yaourt -Sy ## Pour être à jour ;)
 	
-# pré-configuration de pacman.conf
-	. $REPERTOIRE/include/pacman
+
 # Ma fonction faire_demande
 	. $REPERTOIRE/include/fct_demander
 
