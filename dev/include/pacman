@@ -1,5 +1,5 @@
 	pacman=`cat /etc/pacman.conf | grep "archlinuxfr"`
-	if [ -n "$pacman" ] ; then
+	if [ $? = 0 ] ; then
 		echo "pacman.conf est déjà configuré"
 	else
 		echo "[archlinuxfr]" >> /etc/pacman.conf
