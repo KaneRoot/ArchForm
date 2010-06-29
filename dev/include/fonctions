@@ -55,26 +55,7 @@ function install_kde {
 	make_conf
 
 }
-function install_openbox {
-	
-	. $REPERTOIRE/include/pacman
-	pacman -Sy
-	pacman -S yaourt
-	yaourt -Sy
-	clear
-	tab=()
-	. $REPERTOIRE/include/fct_accepter
-	
-	. $REPERTOIRE/include/OPENBOX
-	clear
-	. $REPERTOIRE/include/sans_gui
-	clear
-	yaourt -S ${tab[*]}
-	. $REPERTOIRE/include/xorg
-	
-	make_conf
 
-}
 function install_sans_interface {
 
 	. $REPERTOIRE/include/pacman
@@ -105,3 +86,24 @@ function make_conf {
 	. $REPERTOIRE/include/alsa
 	clear
 }
+
+#function install_openbox {
+#	
+#	. $REPERTOIRE/include/pacman
+#	pacman -Sy
+#	pacman -S yaourt
+#	yaourt -Sy
+#	clear
+#	tab=()
+#	. $REPERTOIRE/include/fct_accepter
+#	
+#	. $REPERTOIRE/include/OPENBOX
+#	clear
+#	. $REPERTOIRE/include/sans_gui
+#	clear
+#	yaourt -S ${tab[*]}
+#	. $REPERTOIRE/include/xorg
+#	
+#	make_conf
+#
+#}

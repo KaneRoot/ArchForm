@@ -11,14 +11,14 @@ REPERTOIRE=`pwd`
 	# je prend mes fonctions toutes prêtes :)
 	. $REPERTOIRE/include/fonctions
 	
-	if [ $# -lt 1 ] ; then
+	if [ "$#" -lt 1 ] ; then
 		. $REPERTOIRE/formulaire
-	elif [ "$#" = "1" ] ; then
+	elif [ "$#" = 1 ] ; then
 		case "$1" in 
 			"-g" | "--gnome") install_gnome ;;
 			"-k" | "--kde") install_kde ;;
 			"-s" | "--sans-ig") install_sans_interface ;;
-			"-o" | "--openbox") install_openbox ;;
+#			"-o" | "--openbox") install_openbox ;;
 			"-h" | "--help") echo "Tapez: $0 [--gnome|--kde|--sans-ig]" ;;
 			*)  echo "Tapez: $0 [--gnome|--kde|--sans-ig]" && exit $ERREUR_ARG ;;
 		esac
