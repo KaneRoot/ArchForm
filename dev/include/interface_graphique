@@ -1,17 +1,17 @@
 	read -p "Installer une interface graphique o/n : " rep_int
 	
-	case $rep_int in
-		"O" | "o" | "oui" | "Oui" | "OUI") rep_int='O' ;;
+	case "$rep_int" in
+		"O" | "o" | "oui" | "Oui" | "OUI") rep_int='o' ;;
 		"N" | "n" | "non" | "Non" | "NON") rep_int='N' ; rep_interface='AUCUNE_INTERFACE' ;;
 		*) exit $ERREUR_CHOIX ;;
 	esac	
 
-	if [ "$rep_int" = "O" ] ; then
+	if [ "$rep_int" = "o" ] ; then
 		read -p "Gnome / Kde ? : " rep_interface
 		
 		case $rep_interface in 
-			"Gnome" | "gnome" | "g" | "G") ; tab[1]='gnome' ; rep_interface='GNOME' ;;
-			"Kde" | "k" | "K" | "kde") ; tab[1]='kde-meta-kdebase kde-meta-kdeartwork kde-l10n-fr' 
+			"Gnome" | "gnome" | "g" | "G") tab[1]='gnome' ; rep_interface='GNOME' ;;
+			"Kde" | "k" | "K" | "kde") tab[1]='kde-meta-kdebase kde-meta-kdeartwork kde-l10n-fr' 
 										 rep_interface='KDE' ;;
 			*) exit $ERREUR_CHOIX ;;
 		esac
