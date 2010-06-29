@@ -7,7 +7,7 @@
 		if [ "$rep_useradd" = "o" ] ; then
 			
 			read -p "nom d'utilisateur (en minuscules) : " rep_username
-			useradd "$rep_username"
+			adduser "$rep_username"
 		fi
 		var_compteur=1
 	done
